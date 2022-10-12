@@ -148,6 +148,7 @@ if __name__ == '__main__':
 
         # Обновление информации об уже проверенных задачах
         jobs.run_queue -= set(parallel_run)
+        set_ready_job |= set(parallel_run)
 
         # Удаление ранее временных рабочих папок, если все задачи проверены или одна из задач закончилась неуспешно
         if not jobs.run_queue or '' in res_runs:
