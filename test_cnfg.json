@@ -1,0 +1,26 @@
+{
+    "goals": [ "haproxy" ],
+    "jobs": [
+        {
+            "name": "haproxy",
+            "commands": [
+                "python -c \"import time; time.sleep(1)\"",
+                "python -c \"open('haproxy', 'w').write('baz')\""
+            ],
+            "timeout": 1,
+            "depends_on": [
+                "pcre2",
+                "openssl"
+            ]
+        },
+        {
+            "name": "pcre2",
+            "commands": [ "python -c \"open('pcre2', 'w').write('foo')\"" ],
+            "timeout": 7200
+        },
+        {
+            "name": "openssl",
+            "commands": [ "python -c \"open('openssl', 'w').write('bar')\"" ]
+        }
+    ]
+}
