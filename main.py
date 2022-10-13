@@ -131,7 +131,7 @@ if __name__ == '__main__':
                 if os_path.exists(artifact_path):
                     os.remove(artifact_path)
                 shutil.copy(res_runs[i], ARTIFACTS_DIR)
-                result_job["artifact"] = artifact_path
+                result_job["artifact"] = artifact_path.replace('\\', '/')
 
             # Добавление выполнения задачи в результирующий массив
             result["jobs"].append(result_job)
