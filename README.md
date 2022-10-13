@@ -14,8 +14,46 @@
 Порядок действий работы сборщика:
 -----
 0. Требования к окружению: Python 3.9+, pydantic <pre>python -m pip install -r requirements.txt</pre>
-1. Программа запускается из консоли, где единственный аргумент - пусть к файлу конфигурации
+1. Программа запускается из консоли, где единственный аргумент - путь к файлу конфигурации<pre>python cfg_dir/your_cfg.json</pre>
 2. Считывается содержимое файла
+    - структура файла конфигурации:
+   <pre>
+   {
+       "goals": [ "haproxy" ],
+       "jobs": [
+           {
+               "name": "haproxy",
+               "commands": [
+                   "python -c \"import time; time.sleep(1)\"",
+                   "python -c \"open('haproxy', 'w').write('baz')\""
+               ],
+               "timeout": 2,
+               "depends_on": [
+                   "pcre2",
+                   "openssl"
+               ]
+           },
+           {
+               "name": "pcre2",
+               "commands": [ "python -c \"open('pcre2', 'w').write('foo')\"" ],
+               "timeout": 7200,
+               "depends_on": ["aboba"]
+           },
+           {
+               "name": "aboba",
+               "commands": [
+                   "python -c \"import time; time.sleep(1)\"",
+                   "python -c \"open('aboba', 'w').write('aboba')\""
+               ],
+               "timeout": 2
+           },
+           {
+               "name": "openssl",
+               "commands": [ "python -c \"open('openssl', 'w').write('bar')\"" ]
+           }
+       ]
+   }
+   </pre>
 3. Создаётся объект класса Jobs, который при инициализации:
     - цели задач;
     - создаёт из полученных данных объекты класса Job для каждой задачи;
@@ -34,3 +72,29 @@
       - Удаление ранее временных рабочих папок и завершение сборки
       - Если нет, то возвращение к шагу 4.1.
 5. Вывод результата сборки
+   - пример результата сборки
+   <pre>
+   {
+      "state": "success",
+      "jobs": [
+         {
+            "name": "aboba",
+            "state": "success"
+         },
+         {
+            "name": "openssl",
+            "state": "success"
+         },
+         {
+            "name": "pcre2",
+            "state": "success"
+         },
+         {
+            "name": "haproxy",
+            "state": "success",
+            "artifact": "D:\\Progects\\build_system\\artifacts\\haproxy"
+         }
+      ]
+   }
+   </pre>
+   
