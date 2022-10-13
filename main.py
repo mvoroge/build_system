@@ -80,8 +80,10 @@ if __name__ == '__main__':
     ARTIFACTS_DIR = os_path.abspath('artifacts')
 
     from sys import argv
-    # config_path = abspath(argv[1])
-    config_path = os_path.abspath('test_cnfg.json')
+
+    config_path = os_path.abspath(argv[1])
+    # config_path = os_path.abspath('test_cnfg.json')   # Вариант запуска с тестовым файлом конфигурации
+
     assert os_path.isfile(config_path), 'Путь недействительный!'
 
     jobs = Jobs(*parse_config(cnf_path=config_path))
