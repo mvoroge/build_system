@@ -92,7 +92,7 @@
          {
             "name": "haproxy",
             "state": "success",
-            "artifact": "D:/Progects/build_system/artifacts/haproxy"
+            "artifact": "D:/projects/build_system/artifacts/haproxy"
          }
       ]
    }
